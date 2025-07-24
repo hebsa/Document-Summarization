@@ -1,7 +1,29 @@
-| Date       | Activity                         | Notes                                                                           | Challenges                                             | Fixes                                                      |
-| ---------- | -------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------ | ---------------------------------------------------------- |
-| 2025-07-10 | Project initiation               | Understood requirements, target output JSON/text summaries per document.        | Unsure how to chunk large PDFs for LLM summarisation.  | Plan to explore LangChain + PyPDF loader for chunking.     |
-| 2025-07-12 | Environment & workflow setup     | Installed Python, VS Code, `langchain`, `pypdf`, `openai`, `chromadb`.          | Cleaning extracted text of repetitive headers/footers. | Added regex post-processing to clean extracted text.       |
-| 2025-07-15 | LLM summarisation pipeline       | Tested summarisation using GPT-4o on chunks and merging.                        | Token limits with large chunks.                        | Used chunk-wise summarisation + final merged summary step. |
-| 2025-07-18 | Output formatting & UI alignment | Decided structure: Title, bullet points, short summary. Discussed Streamlit UI. | Context loss when chunks split mid-topic.              | Overlap sentences between chunks to preserve context.      |
-| 2025-07-22 | Testing with sample documents    | Used HR policy PDFs, marketing decks for testing.                               | Inaccurate results for scanned PDFs.                   | Plan to add Tesseract OCR support for scanned PDFs.        |
+Problems Faced and Fixes
+
+Problem Faced
+
+Issue Fixed / Action Taken
+
+Extracted PDF text contained repetitive headers/footers cluttering the input for summarisation.
+
+Added regex-based post-processing to clean repetitive headers and footers from extracted text before passing to LLM.
+
+Large document chunks exceeded LLM token limits, causing summarisation failures or cut-off outputs.
+
+Implemented chunk-wise splitting with sentence overlap, summarising chunks individually and merging them for a final summary.
+
+Faced JSONDecodeError due to unexpected response formats from LLM when parsing summarisation outputs.
+
+Switched to using .get('response', '') safely during parsing, and ensured structured output requests in prompts to the LLM.
+
+Scanned PDFs failed to extract text properly due to absence of OCR capability.
+
+Planned integration of Tesseract OCR to extract text from scanned PDFs, ensuring all document types are handled consistently.
+
+Encountered “port already in use” errors during test environment runs.
+
+Identified existing processes using the port, avoided duplicate service restarts, and managed process cleanup when required.
+
+Conclusion
+
+This project enabled practical, hands-on experience in building a Document Summarisation Tool using LLMs with LangChain. The learning included effective PDF handling, chunking strategies, LLM prompt structuring, and planning UI integrations, ensuring the tool is functional, reliable, and ready for internal and client-facing summarisation workflows.
